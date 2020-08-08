@@ -3,9 +3,9 @@ function love.load()
     windowY = 600
     love.window.setMode(windowX, windowY)
 
-    horizon = 0.8 --what percent from the bottom of the screen
+    horizon = 2.0 --what percent from the bottom of the screen
     origin = 0.2 --what percent from the bottom of the screen
-    viewDist = 5 --idk the units...
+    viewDist = 6 --idk the units...
     gridSize = 100 --in px
 
     --create a grid based system 
@@ -17,7 +17,7 @@ function love.load()
         x = 0,
         y = 0,
         z = 0,
-        speed = 5
+        speed = 7
     }
     frogGrid = {
         x = 0,
