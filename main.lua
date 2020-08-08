@@ -5,7 +5,7 @@ function love.load()
 
     horizon = 2.0 --what percent from the bottom of the screen
     origin = 0.2 --what percent from the bottom of the screen
-    viewDist = 6 --idk the units...
+    viewDist = 10 --idk the units...
     gridSize = 100 --in px
 
     --create a grid based system 
@@ -17,7 +17,7 @@ function love.load()
         x = 0,
         y = 0,
         z = 0,
-        speed = 7
+        speed = 3
     }
     frogGrid = {
         x = 0,
@@ -30,28 +30,15 @@ function love.load()
         z = 0
     }
 
-
     minimapX = 50
     minimapY = 50
 end
 
 function love.update(dt)
-    if love.keyboard.isDown('right') then
-        frog.x = frog.x + dt * frog.speed
-    end
-    if love.keyboard.isDown('left') then
-        frog.x = frog.x - dt * frog.speed
-    end
-    if love.keyboard.isDown('up') then
-        frog.y = frog.y + dt * frog.speed
-    end
-    if love.keyboard.isDown('down') then
-        frog.y = frog.y - dt * frog.speed
-    end
+    moveToMouse(dt)
 
     frogGrid.x, frogGrid.y, frogGrid.z = worldToGrid(frog.x, frog.y, frog.z, viewDist)
     frogScreen.x, frogScreen.y, frogScreen.z = gridToScreen(frogGrid.x, frogGrid.y, frogGrid.z, gridSize)
-
 
 end
 
@@ -112,4 +99,22 @@ function drawFrog(x, y, scale)
     love.graphics.setColor(0.3, 0.8, 0.5)
     love.graphics.rectangle('fill', x - (size/2), y - size, size, size)
 
+end
+
+-- TODO need to account for fluctuation between float positions
+function moveToMouse(dt)
+    local mouse = {}
+    mouse.x, mouse.y = love.mouse.getPosition()
+
+    if frogScreen.x < mouse.x then
+        frog.x = frog.x + dt * frog.speed
+    elseif frogScreen.x > mouse.x then
+        frog.x = frog.x - dt * frog.speed
+    end
+
+    if frogScreen.y < mouse.y then
+        frog.y = frog.y - dt * frog.speed
+    elseif frogScreen.y > mouse.y then
+        frog.y = frog.y + dt * frog.speed
+    end
 end
