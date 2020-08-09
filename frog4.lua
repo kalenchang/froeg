@@ -16,12 +16,13 @@ frog = {
     angle = math.pi/2,
     xvel = 0,
     yvel = 0,
+    size = 50,
 }
 
 function drawFrog(f)
     --based on screen x and y, the bottom of the frog
     love.graphics.setColor(colors.frogGreen)
-    love.graphics.rectangle('fill', f.x - (50/2), f.y - 50, 50, 50)
+    love.graphics.rectangle('fill', f.x - (f.size/2), f.y - f.size, f.size, f.size)
 
     --draw eye
     love.graphics.setColor(colors.black)
@@ -30,7 +31,6 @@ function drawFrog(f)
 end
 
 
--- TODO need to account for fluctuation between float positions
 function moveToMouse(dt)
     local mouse = {}
     mouse.x, mouse.y = love.mouse.getPosition()

@@ -16,15 +16,21 @@ function love.load()
         frogGreen = convertColor("96bb7c"),
         lightGreen = convertColor("d6efc7"),
         lightGrey = convertColor("aaaaaa"),
+        logBrown = convertColor("661c07"),
         black = convertColor("000000"),
     }
 
     require("frog4")
+    require("obstacle/log")
 
 end
 
 function love.update(dt)
+    reset_log(log)
 
+    -- TODO create helper function to convert x,y to top left coord
+    local frogx, frogy = coords_to_top_left(frog)
+    check_collision_with_frog(log, frogx, frogy, frog.size, frog.size)
     lookAtMouse(frog)
 
     timer = timer + dt * frequency
@@ -37,6 +43,7 @@ function love.update(dt)
         frogHop(frog, beat)
     end
 
+    move_log(log, dt)
     frogMove(frog, dt)
 
     --moveToMouse(dt)
@@ -49,6 +56,7 @@ function love.draw()
     drawFloor(floor)
 
     drawFrog(frog)
+    draw_log(log)
 
     --DEBUG (temporary)
     love.graphics.setColor(0, 0, 0)
