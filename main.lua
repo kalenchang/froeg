@@ -30,10 +30,10 @@ function love.update(dt)
     log:reset()
     log:setHitIfOutOfBounds()
 
-    local frogx, frogy = coords_to_top_left(frog)
+    local frogx, frogy = frog:getScreenOrigin()
     log:checkCollision(frogx, frogy, frog.size, frog.size)
 
-    lookAtMouse(frog)
+    frog:lookAtMouse()
 
     timer = timer + dt * frequency
     if timer > 1 then
@@ -42,11 +42,11 @@ function love.update(dt)
         if beat > 3 then
             beat = beat - 3
         end
-        frogHop(frog, beat)
+        frog:hop(beat)
     end
 
     log:move(dt)
-    frogMove(frog, dt)
+    frog:move(dt)
 
 end
 
@@ -55,7 +55,7 @@ function love.draw()
 
     drawFloor(floor)
 
-    drawFrog(frog)
+    frog:draw()
     log:draw()
 
     --DEBUG (temporary)
