@@ -27,10 +27,11 @@ end
 
 function love.update(dt)
     reset_log(log)
+    log_is_out_of_bounds(log)
 
-    -- TODO create helper function to convert x,y to top left coord
     local frogx, frogy = coords_to_top_left(frog)
     check_collision_with_frog(log, frogx, frogy, frog.size, frog.size)
+
     lookAtMouse(frog)
 
     timer = timer + dt * frequency
@@ -45,8 +46,6 @@ function love.update(dt)
 
     move_log(log, dt)
     frogMove(frog, dt)
-
-    --moveToMouse(dt)
 
 end
 

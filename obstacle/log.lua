@@ -16,7 +16,7 @@ function draw_log(log)
     love.graphics.rectangle('fill', log.x - (log.size/2), log.y - log.size, log.size, log.size)
 end
 
-function kill_log(log)
+function log_is_out_of_bounds(log)
     if is_out_of_bounds(log) then
         log.is_hit = true
     end
