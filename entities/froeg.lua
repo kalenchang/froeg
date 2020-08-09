@@ -97,3 +97,8 @@ function lookAtMouse(f)
         f.angle = 2.84
     end
 end
+
+-- TODO DEPRECATE after moving froeg to Object
+function coords_to_top_left(o) 
+    return o.x - (o.size/2), o.y - o.size
+end

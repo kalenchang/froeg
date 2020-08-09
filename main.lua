@@ -20,17 +20,18 @@ function love.load()
         black = convertColor("000000"),
     }
 
-    require("frog4")
-    require("obstacle/log")
+    require("entities/base")
+    require("entities/froeg")
+    require("entities/log")
 
 end
 
 function love.update(dt)
-    reset_log(log)
-    log_is_out_of_bounds(log)
+    log:reset()
+    log:setHitIfOutOfBounds()
 
     local frogx, frogy = coords_to_top_left(frog)
-    check_collision_with_frog(log, frogx, frogy, frog.size, frog.size)
+    log:checkCollision(frogx, frogy, frog.size, frog.size)
 
     lookAtMouse(frog)
 
@@ -44,7 +45,7 @@ function love.update(dt)
         frogHop(frog, beat)
     end
 
-    move_log(log, dt)
+    log:move(dt)
     frogMove(frog, dt)
 
 end
@@ -55,7 +56,7 @@ function love.draw()
     drawFloor(floor)
 
     drawFrog(frog)
-    draw_log(log)
+    log:draw()
 
     --DEBUG (temporary)
     love.graphics.setColor(0, 0, 0)
