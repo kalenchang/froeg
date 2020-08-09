@@ -3,6 +3,7 @@ function love.load()
     windowX = 800
     windowY = 600
     love.window.setMode(windowX, windowY)
+    love.window.setTitle("froeg")
 
     floor= 500
 
@@ -76,10 +77,10 @@ function love.draw()
     
 end
 
---helper functions
+-- helper functions
 
 function convertColor(hexcode)
-    --takes hexcode as a string, eg FFFFFF
+    -- takes hexcode as a string, eg FFFFFF
     local hexes = {
         string.sub(hexcode, 1, 2),
         string.sub(hexcode, 3, 4),
@@ -94,7 +95,7 @@ function convertColor(hexcode)
 end
 
 function drawFloor(floor)
-    love.graphics.setColor(0, 0, 0)
+    love.graphics.setColor(colors.black)
     love.graphics.line(0, floor, windowX, floor)
 end
 
@@ -106,7 +107,7 @@ function drawBeats(b)
     end
     love.graphics.circle('fill', windowX - ((4-b) * 50), 30, 20)
 
-    --draw outines
+    -- draw beat outines
     love.graphics.setColor(0.6, 0.6, 0.6)
     for i = 1, 3 do
         love.graphics.circle('line', windowX - (i * 50), 30, 20)
