@@ -1,8 +1,9 @@
 --frog functions, maybe make into an object??
---original frog
+--frog has bigger bigHop, but also higher gravity on big hops
+--makes the big hops closer in duration to little hops
 
 gravy = 4000
-bigHop = 800
+bigHop = 1000
 smallHop = 500
 
 frog = {
@@ -48,9 +49,11 @@ end
 function frogHop(f, b)
     
     local hopDistance = smallHop
+    gravy = 4000
     --if strong beat, hop more
     if b == 1 then
         hopDistance = bigHop
+        gravy = 6000
     end
 
     --make sure frog is touching floor

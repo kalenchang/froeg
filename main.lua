@@ -1,5 +1,4 @@
 function love.load()
-    require("frog")
 
     windowX = 800
     windowY = 600
@@ -10,19 +9,7 @@ function love.load()
     timer = 0
     beat = 1
     tempo = 120
-
-    gravy = 4000
-    bigHop = 800
-    smallHop = 500
-
-    frog = {
-        x = 100,
-        y = floor,
-        speed = 300, -- not used rn
-        angle = math.pi/3,
-        xvel = 0,
-        yvel = 0,
-    }
+    frequency = tempo/60
 
     colors = {
         darkGreen = convertColor("184d47"),
@@ -31,13 +18,14 @@ function love.load()
         lightGrey = convertColor("aaaaaa"),
         black = convertColor("000000"),
     }
+
+    require("frog4")
+
 end
 
 function love.update(dt)
 
     lookAtMouse(frog)
-
-    local frequency = tempo/60
 
     timer = timer + dt * frequency
     if timer > 1 then

@@ -1,9 +1,11 @@
 --frog functions, maybe make into an object??
---original frog
+--frog has bigger bigHop, but also higher gravity on big hops
+--makes the big hops closer in duration to little hops
+--frog3 makes the little hops always the same angle (either left or right)
 
 gravy = 4000
-bigHop = 800
-smallHop = 500
+bigHop = 1300
+smallHop = 400
 
 frog = {
     x = 100,
@@ -46,23 +48,29 @@ end
 
 --TODO: add these functions to frog itself
 function frogHop(f, b)
+
+    
     
     local hopDistance = smallHop
+    gravy = 3000
     --if strong beat, hop more
     if b == 1 then
         hopDistance = bigHop
+        gravy = 8000
+        
+    else
+        --if weak beat, only 2 angles allowed (left or right)
+        if math.cos(f.angle) > 0 then
+            f.angle = math.pi/4
+        else
+            f.angle = 3*math.pi/4
+        end
     end
 
     --make sure frog is touching floor
     if f.y > floor - 0.1 then
         f.xvel = f.xvel + hopDistance * math.cos(f.angle)
-        local yboost = math.sin(f.angle)
-        --if mouse is sufficiently low (horizontal or lower), make sure frog
-        --still has some vertical velocity
-        if yboost < 0.2 then
-            yboost = 0.2
-        end
-        f.yvel = f.yvel + hopDistance * yboost
+        f.yvel = f.yvel + hopDistance * math.sin(f.angle)
     end
 
 end
@@ -83,5 +91,17 @@ end
 
 function lookAtMouse(f)
     local mouseX, mouseY = love.mouse.getPosition()
-    f.angle = math.atan2(f.y - mouseY, mouseX - f.x)
+    f.angle = math.abs(math.atan2(f.y - mouseY, mouseX - f.x))
+
+    --if angle too upwards, make sure jump is not vertical
+    if f.angle > 1.3 and f.angle < 1.57 then
+        f.angle = 1.3
+    elseif f.angle > 1.57 and f.angle < 1.8 then
+        f.angle = 1.8
+    --if angle too horizontal, make sure jump is not horizontal
+    elseif f.angle < 0.3 then
+        f.angle = 0.3
+    elseif f.angle > 2.84 then
+        f.angle = 2.84
+    end
 end
