@@ -1,9 +1,8 @@
 -- making all the jumps the same duration
 -- this makes small hops a lot more "floaty", esp at lower tempi
 
--- TODO consider moving these constants into a util file
-bigHop = 600
-smallHop = 200
+BIG_HOP = 600
+SMALL_HOP = 200
 
 -- length of a beat/jump
 duration = 60 / tempo
@@ -31,10 +30,10 @@ function Frog:draw()
 end
 
 function Frog:hop(beat)
-    local hopDistance = smallHop
+    local hopDistance = SMALL_HOP
     --if strong beat, hop more
     if beat == 3 then
-        hopDistance = bigHop
+        hopDistance = BIG_HOP
     end
 
     --make sure frog is touching floor
