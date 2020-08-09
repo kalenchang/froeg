@@ -1,7 +1,7 @@
---frog functions, maybe make into an object??
 --making all the jumps the same duration
 --this makes small hops a lot more "floaty", esp at lower tempi
 
+-- TODO consider moving these constants into a util file
 gravy = 4000
 bigHop = 600
 smallHop = 200
@@ -9,15 +9,18 @@ smallHop = 200
 --length of a beat/jump
 duration = 60 / tempo
 
-frog = {
-    x = 100,
-    y = floor,
-    speed = 300, -- not used rn
-    angle = math.pi/2,
-    xvel = 0,
-    yvel = 0,
-    size = 50,
-}
+Frog = Base:extend()
+
+function Frog:new(x, y, size)
+    Frog.super.new(self, x, y, size)
+    self.xvel = 0
+    self.yvel = 0
+    self.angle = math.pi / 2
+end
+
+frog = Frog(100, floor, 50)
+
+-- TODO make the following functions to extend Frog
 
 function drawFrog(f)
     --based on screen x and y, the bottom of the frog
