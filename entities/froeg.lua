@@ -7,17 +7,15 @@ SMALL_HOP = 200
 -- length of a beat/jump
 duration = 60 / tempo
 
-Frog = Base:extend()
+Frog = class('Frog', Base)
 
-function Frog:new(x, y, size)
-    Frog.super.new(self, x, y, size)
+function Frog:initialize(x, y, size)
+    Base.initialize(self, x, y, size)
     self.xvel = 0
     self.yvel = 0
     self.angle = math.pi / 2
     self.gravity = 4000
 end
-
-frog = Frog(100, floor, 50)
 
 function Frog:draw()
     local frogX, frogY = self:getScreenOrigin()

@@ -1,10 +1,10 @@
-Object = require("../lib/classic")
+class = require("../lib/middleclass")
 
-Base = Object:extend()
+Base = class('Base')
 
 -- Base class for collision-based entities in the game
 -- (x, y) origin represents the bottom center coordinates of the entity
-function Base:new(x, y, size)
+function Base:initialize(x, y, size)
     self.x = x or 0
     self.y = y or 0
     self.size = size

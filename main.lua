@@ -1,5 +1,5 @@
-require("lib/classic")
-require("lib/gamestate")
+require("lib/middleclass")
+require("lib/stateful")
 
 function love.load()
 
@@ -27,6 +27,8 @@ function love.load()
     require("entities/base")
     require("entities/froeg")
     require("entities/log")
+    frog = Frog:new(100, floor, 50)
+    log = Log:new(windowX, floor, 15, 100)
 
 end
 

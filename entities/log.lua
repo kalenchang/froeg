@@ -1,13 +1,10 @@
 -- Log represents a type of obstacle that exists on top of the ground
+Log = class('Log', Base)
 
-Log = Base:extend()
-
-function Log:new(x, y, size, speed)
-    Log.super.new(self, x, y, size)
+function Log:initialize(x, y, size, speed)
+    Base.initialize(self, x, y, size)
     self.speed = speed
 end
-
-log = Log(windowX, floor, 15, 100)
 
 function Log:draw()
     local screenX, screenY = self:getScreenOrigin()
