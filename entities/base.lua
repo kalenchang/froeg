@@ -1,4 +1,4 @@
-Object = require "classic"
+Object = require("../lib/classic")
 
 Base = Object:extend()
 

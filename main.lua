@@ -1,3 +1,6 @@
+require("lib/classic")
+require("lib/gamestate")
+
 function love.load()
 
     windowX = 800
