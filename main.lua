@@ -5,7 +5,10 @@ function love.load()
     love.window.setMode(windowX, windowY)
     love.window.setTitle("froeg")
 
-    floor= 500
+    translateX = 0
+    translateY = 0
+
+    floor = 500
 
     timer = 0
     beat = 1
@@ -19,22 +22,42 @@ function love.load()
         lightGrey = convertColor("aaaaaa"),
         logBrown = convertColor("661c07"),
         black = convertColor("000000"),
+        treeGreen = convertColor("35a959")
     }
 
     require("entities/base")
     require("entities/froeg")
     require("entities/log")
+    require("entities/tree")
+
+    --generate entities
+
+    entities ={
+        frog = Frog(100, floor, 50),
+        log = Log(windowX - 200, floor, 15),
+        log2 = Log(windowX, floor, 15),
+        tree = Tree(windowX, floor, 100, 300, -30)
+    }
+
 
 end
 
 function love.update(dt)
-    log:reset()
-    log:setHitIfOutOfBounds()
 
-    local frogx, frogy = frog:getScreenOrigin()
-    log:checkCollision(frogx, frogy, frog.size, frog.size)
+    local frogx, frogy = entities.frog:getScreenOrigin()
 
-    frog:lookAtMouse()
+    for ename, eobj in pairs(entities) do
+        if not eobj.isCharacter then
+            eobj:reset()
+            eobj:setHitIfOutOfBounds()
+            if eobj.isLog then
+                eobj:checkCollision(frogx, frogy, entities.frog.sizeX, entities.frog.sizeY)
+            end
+        end
+    end
+
+
+    entities.frog:lookAtMouse()
 
     timer = timer + dt * frequency
     if timer > 1 then
@@ -43,37 +66,66 @@ function love.update(dt)
         if beat > 3 then
             beat = beat - 3
         end
-        frog:hop(beat)
+        entities.frog:hop(beat)
     end
 
-    log:move(dt)
-    frog:move(dt)
+    for ename, eobj in pairs(entities) do
+        eobj:move(dt)
+    end
+    
+    --move camera 50px per sec right
+    translateX = translateX - dt * 50
 
 end
 
 function love.draw()
     love.graphics.setBackgroundColor(1, 1, 1)
 
-    drawFloor(floor)
+    love.graphics.push()
 
-    frog:draw()
-    log:draw()
+    love.graphics.translate(translateX, translateY)
+
+    for ename, eobj in pairs(entities) do
+        if eobj.isbg then
+            eobj:draw()
+        end
+    end
+    for ename, eobj in pairs(entities) do
+        if not eobj.isbg then
+            eobj:draw()
+        end
+    end
+    love.graphics.pop()
+
+    drawFloor(floor)
 
     --DEBUG (temporary)
     love.graphics.setColor(0, 0, 0)
     love.graphics.print('coordinates: ('..
-        (math.floor(10*frog.x)/10)..', '..
-        (math.floor(10*frog.y)/10)..')'
+        (math.floor(10*entities.frog.x)/10)..', '..
+        (math.floor(10*entities.frog.y)/10)..')'
         , 10, 10)
 
     love.graphics.print('velocity: ('..
-        (math.floor(10*frog.xvel)/10)..', '..
-        (math.floor(10*frog.yvel)/10)..')'
+        (math.floor(10*entities.frog.xvel)/10)..', '..
+        (math.floor(10*entities.frog.yvel)/10)..')'
         , 10, 30)
 
-    love.graphics.print('angle : '..(math.floor(10*frog.angle)/10), 10, 50)
+    love.graphics.print('angle : '..(math.floor(10*entities.frog.angle)/10), 10, 50)
+
+    love.graphics.print('mouse: ('..
+        (math.floor(10*love.mouse.getX())/10)..', '..
+        (math.floor(10*love.mouse.getY())/10)..')'
+        , 10, 70)
+
+    love.graphics.print('translate: ('..
+        (math.floor(10*translateX)/10)..', '..
+        (math.floor(10*translateY)/10)..')'
+        , 10, 90)
+
 
     drawBeats(beat)
+
     
 end
 
