@@ -1,7 +1,7 @@
-class = require("lib/middleclass")
-stateful = require("lib/stateful")
+class = require 'lib/middleclass'
+stateful = require 'lib/stateful'
 
-require("game")
+require 'game'
 
 local game
 
