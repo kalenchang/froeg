@@ -1,10 +1,15 @@
+class = require 'lib/middleclass'
+stateful = require 'lib/stateful'
+MenuUI = require '/lib/menuui'
+
+Game = class('Game'):include(stateful)
+
 require 'states/menu'
 require 'states/pause'
 
-Game = class('Game'):include(Stateful)
-
 function Game:initialize()
-    -- self:gotoState('Menu')
+    self:gotoState('Menu')
+
     windowX = 800
     windowY = 600
     love.window.setMode(windowX, windowY)
@@ -22,12 +27,13 @@ function Game:initialize()
 
     colors = {
         darkGreen = convertColor('184d47'),
-        frogGreen = convertColor('96bb7c'),
+        frogGreen = convertColor('89ab35'),
         lightGreen = convertColor('d6efc7'),
         lightGrey = convertColor('aaaaaa'),
         logBrown = convertColor('661c07'),
         black = convertColor('000000'),
-        treeGreen = convertColor("35a959")
+        treeGreen = convertColor('35a959'),
+        darkBlue = convertColor('0c1675')
     }
 
     require 'entities/base'
@@ -132,9 +138,9 @@ end
 
 function Game:keypressed(key, code)
   -- Pause game
-  -- if key == 'p' then
-  --   self:pushState('Pause')
-  -- end
+  if key == 'escape' then
+    self:pushState('Pause')
+  end
 end
 
 function Game:mousepressed(x, y, button, isTouch)
