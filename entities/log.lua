@@ -29,7 +29,7 @@ end
 -- Main garborator function
 function Log:reset()
     if self.isHit then
-        self.x = - translateX + windowX + 50
+        self.x = - translateX + const.WINDOW_X + 50
         self.isHit = false
     end
 end

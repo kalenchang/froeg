@@ -5,7 +5,7 @@ BIG_HOP = 600
 SMALL_HOP = 200
 
 -- length of a beat/jump
-duration = 60 / tempo
+duration = 60 / const.TEMPO
 
 Frog = class('Frog', Base)
 
@@ -47,8 +47,8 @@ function Frog:move(dt)
     self.x = self.x + self.xvel * dt
     self.y = self.y - self.yvel * dt
 
-    if self.y > floor - 0.1 then
-        self.y = floor
+    if self.y > const.FLOOR - 0.1 then
+        self.y = const.FLOOR
         self.xvel = 0
         self.yvel = 0
     else

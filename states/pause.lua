@@ -10,7 +10,7 @@ function Pause:draw()
     love.graphics.setBackgroundColor(colors.frogGreen)
 
     love.graphics.setColor(colors.darkBlue)
-    love.graphics.print('game paused', windowX / 2, windowY / 2)
+    love.graphics.print('game paused', const.WINDOW_X / 2, const.WINDOW_Y / 2)
 end
 
 function Pause:keypressed(key, code)

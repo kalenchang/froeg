@@ -29,7 +29,7 @@ function Menu:update(dt)
 end
 
 function Menu:draw()
-    menu:draw(windowX / 2 - 175, windowY / 2 - 100)
+    menu:draw(const.WINDOW_X / 2 - 175, const.WINDOW_Y / 2 - 100)
     if self.printSecret then 
         love.graphics.setColor(1, 1, 1)
         love.graphics.print('froeg 8)~~*', 10, 10)

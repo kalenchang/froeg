@@ -10,31 +10,8 @@ require 'states/pause'
 function Game:initialize()
     self:gotoState('Menu')
 
-    windowX = 800
-    windowY = 600
-    love.window.setMode(windowX, windowY)
-    love.window.setTitle('froeg')
-
     translateX = 0
     translateY = 0
-
-    floor= 500
-
-    timer = 0
-    beat = 1
-    tempo = 120
-    frequency = tempo/60
-
-    colors = {
-        darkGreen = convertColor('184d47'),
-        frogGreen = convertColor('89ab35'),
-        lightGreen = convertColor('d6efc7'),
-        lightGrey = convertColor('aaaaaa'),
-        logBrown = convertColor('661c07'),
-        black = convertColor('000000'),
-        treeGreen = convertColor('35a959'),
-        darkBlue = convertColor('0c1675')
-    }
 
     require 'entities/base'
     require 'entities/froeg'
@@ -42,10 +19,10 @@ function Game:initialize()
     require 'entities/tree'
     
     entities = {
-        frog = Frog(100, floor, 50),
-        log = Log(windowX - 200, floor, 15),
-        log2 = Log(windowX, floor, 15),
-        tree = Tree(windowX, floor, 100, 300, -30)
+        frog = Frog(100, const.FLOOR, 50),
+        log = Log(const.WINDOW_X - 200, const.FLOOR, 15),
+        log2 = Log(const.WINDOW_X, const.FLOOR, 15),
+        tree = Tree(const.WINDOW_X, const.FLOOR, 100, 300, -30)
     }
 
 end
@@ -69,14 +46,14 @@ function Game:update(dt)
 
     entities.frog:lookAtMouse()
 
-    timer = timer + dt * frequency
-    if timer > 1 then
-        timer = timer - 1
-        beat = beat + 1
-        if beat > 3 then
-            beat = beat - 3
+    const.TIMER = const.TIMER + dt * const.FREQ
+    if const.TIMER > 1 then
+        const.TIMER = const.TIMER - 1
+        const.BEAT = const.BEAT + 1
+        if const.BEAT > 3 then
+            const.BEAT = const.BEAT - 3
         end
-        entities.frog:hop(beat)
+        entities.frog:hop(const.BEAT)
     end
 
     for ename, eobj in pairs(entities) do
@@ -106,7 +83,7 @@ function Game:draw()
     end
     love.graphics.pop()
 
-    drawFloor(floor)
+    drawFloor(const.FLOOR)
 
     --DEBUG (temporary)
     love.graphics.setColor(0, 0, 0)
@@ -133,7 +110,7 @@ function Game:draw()
         , 10, 90)
 
 
-    drawBeats(beat)
+    drawBeats(const.BEAT)
 end
 
 function Game:keypressed(key, code)
@@ -144,41 +121,4 @@ function Game:keypressed(key, code)
 end
 
 function Game:mousepressed(x, y, button, isTouch)
-end
-
--- helper functions
-
-function convertColor(hexcode)
-    -- takes hexcode as a string, eg FFFFFF
-    local hexes = {
-        string.sub(hexcode, 1, 2),
-        string.sub(hexcode, 3, 4),
-        string.sub(hexcode, 5, 6),
-    }
-    local colorNumbers = {}
-    for i, hex in ipairs(hexes) do
-        table.insert(colorNumbers, tonumber(hex, 16)/255)
-    end
-
-    return colorNumbers
-end
-
-function drawFloor(floor)
-    love.graphics.setColor(colors.black)
-    love.graphics.line(0, floor, windowX, floor)
-end
-
-function drawBeats(b)
-    if b == 1 then
-        love.graphics.setColor(colors.darkGreen)
-    else
-        love.graphics.setColor(colors.lightGreen)
-    end
-    love.graphics.circle('fill', windowX - ((4-b) * 50), 30, 20)
-
-    -- draw beat outines
-    love.graphics.setColor(0.6, 0.6, 0.6)
-    for i = 1, 3 do
-        love.graphics.circle('line', windowX - (i * 50), 30, 20)
-    end
 end
