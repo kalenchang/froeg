@@ -10,8 +10,6 @@ function Base:initialize(x, y, sizeX, sizeY)
     self.sizeX = sizeX or 0
     self.sizeY = sizeY or self.sizeX
     self.isHit = false
-    self.isCharacter = false
-    self.isbg = false
 end
 
 -- Return the entity origin represented by the top left coordinates
