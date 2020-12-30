@@ -45,3 +45,6 @@ upgrades:
 - water walking
 - show future jump targets
 - change tempo
+- tongue?
+  - tongue could be used to collect things by clicking
+  - or could be used to propel froeg places (for big jump)
