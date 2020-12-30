@@ -7,10 +7,10 @@ const = {
 
     -- game constants
     FLOOR = 500,
-    TIMER = 0,
-    BEAT = 1,
-    TEMPO = 120,
-    FREQ = 2  -- TEMPO / 60
+    TIMER = 0, --how is this a constant?
+    BEAT = 1, --how is this a constant?
+    TEMPO = 100,
+    FREQ = 100 / 60  -- TEMPO / 60
 }
 
 colors = {

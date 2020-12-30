@@ -109,6 +109,10 @@ function Game:draw()
         (math.floor(10*translateY)/10)..')'
         , 10, 90)
 
+    love.graphics.print('topvelocity: '..
+        (math.floor(10*entities.frog.testvel)/10)
+        , 10, 110)
+
 
     drawBeats(const.BEAT)
 end

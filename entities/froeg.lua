@@ -1,8 +1,8 @@
 -- making all the jumps the same duration
 -- this makes small hops a lot more "floaty", esp at lower tempi
 
-BIG_HOP = 30
-SMALL_HOP = 10
+BIG_HOP = 650
+SMALL_HOP = 200
 
 -- length of a beat/jump
 duration = 60 / const.TEMPO
@@ -16,6 +16,7 @@ function Frog:initialize(x, y, size)
     self.angle = math.pi / 2
     self.gravity = 4000
     self.isCharacter = true
+    self.testvel = 0
 end
 
 function Frog:draw()
@@ -36,7 +37,11 @@ function Frog:hop(beat)
         hopConstant = BIG_HOP
     end
 
-    local hopVelocity = math.abs( hopConstant * 4 / ((duration ^ 2) * math.cos(self.angle) * math.sin(self.angle)) )
+    local hopVelocity = math.abs( hopConstant  / (math.abs(math.cos(self.angle)) + (math.sin(self.angle) / 4) ) )
+
+    if hopVelocity > self.testvel then
+        self.testvel = hopVelocity
+    end
 
     --make sure frog is touching floor
     --TODO: can we make the vertical hops taller? so that the distance traveled is around the same regardless of the angle?
@@ -69,10 +74,10 @@ function Frog:lookAtMouse()
     self.angle = math.abs(math.atan2(self.y - mouseY, mouseX - self.x))
 
     --if angle too upwards, make sure jump is not vertical
-    if self.angle > 1.3 and self.angle < 1.57 then
-        self.angle = 1.3
-    elseif self.angle > 1.57 and self.angle < 1.8 then
-        self.angle = 1.8
+    if self.angle > 1.4 and self.angle < 1.57 then
+        self.angle = 1.4
+    elseif self.angle > 1.57 and self.angle < 1.74 then
+        self.angle = 1.74
     --if angle too horizontal, make sure jump is not horizontal
     elseif self.angle < 0.3 then
         self.angle = 0.3
