@@ -1,19 +1,21 @@
 -- Log represents a type of obstacle that exists on top of the ground
 Log = class('Log', Base)
 
-function Log:initialize(x, y, size, speed)
+function Log:initialize(x, y, size)
     Base.initialize(self, x, y, size)
-    self.speed = speed
+    self.isLog = true
 end
 
 function Log:draw()
     local screenX, screenY = self:getScreenOrigin()
     love.graphics.setColor(colors.logBrown)
-    love.graphics.rectangle('fill', screenX, screenY, self.size, self.size)
+    love.graphics.rectangle('fill', screenX, screenY, self.sizeX, self.sizeY)
 end
 
 function Log:move(dt)
-    self.x = self.x - dt * self.speed
+    --logs can't move, silly!
+
+    --self.x = self.x - dt * self.speed
 end
 
 -- Set log to be garboratored after going out of bounds
@@ -27,7 +29,7 @@ end
 -- Main garborator function
 function Log:reset()
     if self.isHit then
-        self.x = windowX
+        self.x = - translateX + windowX + 50
         self.isHit = false
     end
 end

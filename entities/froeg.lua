@@ -15,16 +15,18 @@ function Frog:initialize(x, y, size)
     self.yvel = 0
     self.angle = math.pi / 2
     self.gravity = 4000
+    self.isCharacter = true
 end
 
 function Frog:draw()
     local frogX, frogY = self:getScreenOrigin()
+    --QUESTION: is it not weird that we're using colors not defined in this file?
     love.graphics.setColor(colors.frogGreen)
-    love.graphics.rectangle('fill', frogX, frogY, self.size, self.size)
+    love.graphics.rectangle('fill', frogX, frogY, self.sizeX, self.sizeY)
 
     -- draw eye
     love.graphics.setColor(colors.black)
-    love.graphics.circle('fill', self.x + (math.cos(self.angle)) * 20, self.y - (self.size/2) - (math.sin(self.angle)) * 20, 3)
+    love.graphics.circle('fill', self.x + (math.cos(self.angle)) * 20, self.y - (self.sizeY/2) - (math.sin(self.angle)) * 20, 3)
 end
 
 function Frog:hop(beat)
@@ -35,6 +37,7 @@ function Frog:hop(beat)
     end
 
     --make sure frog is touching floor
+    --TODO: can we make the vertical hops taller? so that the distance traveled is around the same regardless of the angle?
     self.xvel = hopDistance * math.cos(self.angle)
     self.yvel = hopDistance * math.sin(self.angle)
     self.gravity = 2.1 * hopDistance * math.sin(self.angle) / duration
@@ -56,6 +59,11 @@ end
 
 function Frog:lookAtMouse()
     local mouseX, mouseY = love.mouse.getPosition()
+
+    --since mouse coordinates are screen coordinates, but frog coordinates are game coordinates, need to shift mouse coordinates to game
+    mouseX = mouseX - translateX
+    mouseY = mouseY - translateY
+
     self.angle = math.abs(math.atan2(self.y - mouseY, mouseX - self.x))
 
     --if angle too upwards, make sure jump is not vertical
